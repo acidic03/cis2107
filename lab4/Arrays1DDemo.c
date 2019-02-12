@@ -1,9 +1,9 @@
-// Matthew Cohen
-//
-//
-//
-//
-//
+//	Matthew Cohen
+//	2-10-2019
+//	Lab 4 - Processing 1D Arrays
+//	
+//	The purpose of the lab is to become fimilar with
+//	1D arrays in C by creating and manipulating its data.
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,7 +11,7 @@
 
 #define RAND_MIN 0
 #define RAND_MAXS 100
-#define DEFAULT_SIZE 40
+#define DEFAULT_ARRAY_SIZE 40
 
 
 void fillArray(int arr[], int size);
@@ -20,31 +20,31 @@ void reverseArray(int arr[], int size);
 void reverseArrayInRange(int arr[], int low, int high, int size);
 void printArray(int arr[], int size);
 void findSequence(int arr[], int size);
+int validRange(int low, int high, int maxSize);
 
 int main(void) {
 	// Setup rand
 	srand((unsigned)time(NULL));
 	
-	int arr[DEFAULT_SIZE];
+	int arr[DEFAULT_ARRAY_SIZE];
 	
-	fillArray(arr, DEFAULT_SIZE);
+	fillArray(arr, DEFAULT_ARRAY_SIZE);
 
-	puts("\nOrginal Array");
-	printArray(arr, DEFAULT_SIZE);
+	puts("\nOrginal:");
+	printArray(arr, DEFAULT_ARRAY_SIZE);
 
-	puts("\nFind max number from index 10 to 19");
-	findWithRange(arr, 10, 19, DEFAULT_SIZE);
+	findWithRange(arr, 2, 2, DEFAULT_ARRAY_SIZE);
 
-	puts("\nReverse array");
-	reverseArray(arr, DEFAULT_SIZE);
-	printArray(arr, DEFAULT_SIZE);
+	puts("\nReversed:");
+	reverseArray(arr, DEFAULT_ARRAY_SIZE);
+	printArray(arr, DEFAULT_ARRAY_SIZE);
 
-	puts("\nReverse in range from index 0 to 5");
-	reverseArrayInRange(arr, 0, 5, DEFAULT_SIZE);
-	printArray(arr, DEFAULT_SIZE);
+	
+	reverseArrayInRange(arr, 8, 8, DEFAULT_ARRAY_SIZE);
+	printArray(arr, DEFAULT_ARRAY_SIZE);
 	
 	puts("\nFind sequence");
-	findSequence(arr, DEFAULT_SIZE);
+	findSequence(arr, DEFAULT_ARRAY_SIZE);
 	  
 	return 0;
 }
@@ -58,24 +58,25 @@ void fillArray(int arr[], int size) {
 }
 
 void findWithRange(int arr[], int low, int high, int size) {
-  if(high > size || low < 0) {
-    puts("Out of range");
+	// Make sure ranges make sense
+	if(!validRange(low, high, size)) {
+		puts("Invalid range");
     return;
-  }
+	}
 
+	printf("\nFinding max between %d and %d:\n", low, high);
   unsigned int maxSoFar = 0;
 
   for(unsigned int i = low; i <= high; ++i) {
     if(arr[i] > maxSoFar) 
       maxSoFar = arr[i];
-    
   }
 
-  printf("Max = %d\n", maxSoFar);
+  printf("\n\tMax = %d\n", maxSoFar);
 }
 
-
 void reverseArray(int arr[], int size) {
+	// Holds temp value to swap
 	unsigned int temp;
 	// Swaps the first with the last and move inward
 	for(unsigned int i = 0; i < size / 2; ++i) {
@@ -86,11 +87,13 @@ void reverseArray(int arr[], int size) {
 }
 
 void reverseArrayInRange(int arr[], int low, int high, int size) {
-	if(low < 0 || high > size || high < low) {
-		puts("In valid range");
-		return;
+	// Make sure ranges make sense
+	if(!validRange(low, high, size)) {
+		puts("Invalid range");
+    return;
 	}
-	
+	printf("\nReversing between %d and %d\n", low, high);
+	// Holds temp value to swap
 	unsigned int temp;
 	// Swaps the values in the range and move inward
 	for(unsigned int i = low; i <= high; ++i) {
@@ -109,7 +112,7 @@ void printArray(int arr[], int size) {
 		if(i % 10 == 0 && i != 0)
 			puts("");
 		
-		printf("%4d ", arr[i]);
+		printf("\t%4d ", arr[i]);
 	}
 
 	puts("");
@@ -143,4 +146,11 @@ void findSequence(int arr[], int size) {
 	}
 
 	puts("sequence not found");
+}
+
+int validRange(int low, int high, int maxSize) {
+	if(low < 0 || high < low || high < 0 || high > maxSize)
+		return 0;
+	
+	return 1;
 }
