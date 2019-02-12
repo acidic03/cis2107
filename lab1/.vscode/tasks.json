@@ -1,0 +1,27 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "run-paycheck",
+            "type": "shell",
+            "command": "gcc -o paycheck paycheck.c; ./paycheck",
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "run-revenue",
+            "type": "shell",
+            "command": "gcc -o revenue revenue.c; ./revenue",
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
