@@ -9,10 +9,12 @@ void average(size_t row, size_t col, int arr[row][col]);
 
 int main(void)
 {
-    // int processGrades[]
-    int rows, cols;
+    puts("Arrays of Pointers");
 
-    printMenu();
+    // array of 4 pointers
+    void (*processGrades[4])(size_t row, size_t col, int arr[row][col]) = {printArray, minimum, maximum, average};
+    // number of rows and cols the user enters
+    int rows, cols;
 
     printf("\n\tHow many rows? ");
     scanf("%d", &rows);
@@ -20,40 +22,62 @@ int main(void)
     printf("\tHow many columns? ");
     scanf("%d", &cols);
 
-    int processGrades[rows][cols];
+    // the main array
+    int studentGrades[rows][cols];
     puts("");
 
-    // Fill array with user inputs
+    // fill array with user inputs
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
             printf("\tenter [%d][%d]: ", i, j);
             // enter input into array
-            scanf("%d", &processGrades[i][j]);
+            scanf("%d", &studentGrades[i][j]);
         }
     }
 
     puts("");
-    printArray(rows, cols, processGrades);
+    
+    int choice;
+    while (1)
+    {
+        printMenu();
+        printf("Enter a choice: ");
+        scanf("%d", &choice);
+
+        if (choice == 4)
+        {
+            break;
+        }
+
+        (*processGrades[choice])(rows, cols, studentGrades);
+    }
+    
+
+    //(*functs[2])(rows, cols, processGrades);
+
+    
 
     return 0;
 }
 
 void printMenu()
 {
-    puts("\nEnter a choice:");
+    //puts("\nEnter a choice:");
 
     puts("\t0  Print the array of grades");
     puts("\t1  Find the minimum grade");
     puts("\t2  Find the maximum grade");
     puts("\t3  Print the average on all tests for each student");
     puts("\t4  End Program");
+    puts("");
 }
 
 void printArray(size_t row, size_t col, int arr[row][col])
 {
-    for (int i = 0; i < row; ++i) {
+    puts("");
+    for (size_t i = 0; i < row; ++i) {
         printf("[");
-        for (int j = 0; j < col; ++j) {
+        for (size_t j = 0; j < col; ++j) {
             // Last number in row
             if (j == col - 1)
             {
@@ -64,46 +88,56 @@ void printArray(size_t row, size_t col, int arr[row][col])
         }
         puts("]");
     }
+    puts("");
 }
 
 void minimum(size_t row, size_t col, int arr[row][col])
 {
     int minSoFar = arr[0][0];
 
-    for (int i = 1; i < row; ++i) {
-        for (int j = 1; j < col; ++j) {
+    for (size_t i = 0; i < row; ++i) {
+        for (size_t j = 0; j < col; ++j) {
             if (arr[i][j] < minSoFar)
+            {
                 minSoFar = arr[i][j];
+            }
         }
     }
 
-    printf("Minimum is %d\n", minSoFar);
+    printf("\n\tThe minimum is %d\n", minSoFar);
+    puts("");
 }
 
 void maximum(size_t row, size_t col, int arr[row][col])
 {
     int maxSoFar = arr[0][0];
 
-    for (int i = 1; i < row; ++i) {
-        for (int j = 1; j < col; ++j) {
+    for (size_t i = 0; i < row; ++i) {
+        for (size_t j = 0; j < col; ++j) {
             if (arr[i][j] > maxSoFar)
+            {
                 maxSoFar = arr[i][j];
+            }
         }
     }
 
-    printf("Maximum is %d\n", maxSoFar);
+    printf("\n\tThe maximum is %d\n", maxSoFar);
+    puts("");
 }
 
 void average(size_t row, size_t col, int arr[row][col])
 {
-    unsigned int count = 0, sum = 0;
+    float sum = 0.0f;
 
-    for (int i = 1; i < row; ++i) {
-        for (int j = 1; j < col; ++j) {
+    puts("\nAverages:");
+    for (size_t i = 0; i < row; ++i) {
+        printf("\tstudent %d: ", i+1);
+
+        for (size_t j = 0; j < col; ++j) {
             sum += arr[i][j];
-            ++count;
         }
+        printf("%.2f\n", sum / (float)(col));
+        sum = 0.0f;
     }
-
-    printf("The average is %d\n", (sum/count));
+    puts("");
 }

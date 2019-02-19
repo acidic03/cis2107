@@ -12,10 +12,10 @@ int main(void)
   int rows, cols;
   puts("Let's create a 2Dim array!");
 
-  printf("\tHow many rows? ");
+  printf("\n\tHow many rows? ");
   scanf("%d", &rows);
 
-  printf("\n\tHow many columns? ");
+  printf("\tHow many columns? ");
   scanf("%d", &cols);
 
   puts("");
@@ -27,20 +27,34 @@ int main(void)
   {
     for (unsigned int j = 0; j < cols; ++j)
     {
-      printf("\n\tenter [%d][%d] : ", i, j);
+      printf("\tenter [%d][%d] : ", i, j);
       scanf("%d", &arr[i][j]);
     }
   }
 
   puts(""); 
 
-  printf("Sum of row 1 = %d\n", rowSum(0, rows, cols, arr));
-  printf("Sum of row 2 = %d\n", rowSum(1, rows, cols, arr));
-
+  if (rows >= 2)
+  {
+    printf("Sum of row 1 = %d\n", rowSum(0, rows, cols, arr));
+    printf("Sum of row 2 = %d\n", rowSum(1, rows, cols, arr));
+  }
+  else
+  {
+    printf("Sum of row 1 = %d\n", rowSum(0, rows, cols, arr));
+  }
   puts("");
 
-  printf("Sum of column 1 = %d\n", columnSum(0, rows, cols, arr));
-  printf("Sum of column 2 = %d\n", columnSum(1, rows, cols, arr));
+  if (cols >= 3)
+  {
+    printf("Sum of column 1 = %d\n", columnSum(0, rows, cols, arr));
+    printf("Sum of column 2 = %d\n", columnSum(1, rows, cols, arr));
+    printf("Sum of column 3 = %d\n", columnSum(2, rows, cols, arr));
+  }
+  else
+  {
+    printf("Sum of column 1 = %d\n", columnSum(0, rows, cols, arr));
+  }
 
   puts("");
 
@@ -57,6 +71,7 @@ int main(void)
   return 0;
 }
 
+// find the max number in the 2D array
 int max(int r, int c, int arr[r][c])
 {
   int maxSoFar = 0;
@@ -76,10 +91,10 @@ int max(int r, int c, int arr[r][c])
   return maxSoFar;
 }
 
-
+// find the sum in a row
 int rowSum(int rowToSum, int r, int c, int arr[r][c])
 {
-  if (rowToSum >= r)
+  if (rowToSum >= r || rowToSum < 0)
   {
     puts("Invalid row.");
     return 0;
@@ -95,9 +110,10 @@ int rowSum(int rowToSum, int r, int c, int arr[r][c])
   return sum;
 }
 
+// find the sum in a column
 int columnSum(int columnToSum, int r, int c, int arr[r][c])
 {
-  if (columnToSum >= c)
+  if (columnToSum >= c || columnToSum < 0)
   {
     puts("Invalid column.");
     return 0;
@@ -113,11 +129,13 @@ int columnSum(int columnToSum, int r, int c, int arr[r][c])
   return sum;
 }
 
+// check if the array is square
 int isSquare(int r, int c)
 {
   return r == c ? 1 : 0;
 }
 
+// prints out the 2D array
 void displayOutputs(int r, int c, int arr[r][c])
 {
   for (unsigned int i = 0; i < r; ++i)
