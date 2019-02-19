@@ -1,3 +1,11 @@
+//  Matthew Cohen
+//  02-17-2019
+//  CIS 2107
+//  Lab 5 - 2D Arrays
+//
+//  The purpose of this program is to gain practice with 2D arrays 
+//  by using a array of function pointer to view its data.
+
 #include <stdio.h>
 
 void printMenu(void);
@@ -125,7 +133,7 @@ void average(size_t row, size_t col, int arr[row][col])
 
     puts("\nAverages:");
     for (size_t i = 0; i < row; ++i) {
-        printf("\tstudent %d: ", i+1);
+        printf("\tstudent %zu: ", i+1);
 
         for (size_t j = 0; j < col; ++j) {
             sum += arr[i][j];

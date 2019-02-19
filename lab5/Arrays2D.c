@@ -1,3 +1,10 @@
+//  Matthew Cohen
+//  02-17-2019
+//  CIS 2107
+//  Lab 5 - 2D Arrays
+//
+//  The purpose of this program is to gain practice with 2D arrays 
+//  by using functions to manipulate its data.
 
 #include <stdio.h>
 
@@ -34,26 +41,16 @@ int main(void)
 
   puts(""); 
 
-  if (rows >= 2)
+  for(size_t i = 0; i < rows; ++i)
   {
-    printf("Sum of row 1 = %d\n", rowSum(0, rows, cols, arr));
-    printf("Sum of row 2 = %d\n", rowSum(1, rows, cols, arr));
+    printf("Sum of row %zu = %d\n", i+1, rowSum(i, rows, cols, arr));
   }
-  else
-  {
-    printf("Sum of row 1 = %d\n", rowSum(0, rows, cols, arr));
-  }
+  
   puts("");
 
-  if (cols >= 3)
+  for(size_t i = 0; i < cols; ++i)
   {
-    printf("Sum of column 1 = %d\n", columnSum(0, rows, cols, arr));
-    printf("Sum of column 2 = %d\n", columnSum(1, rows, cols, arr));
-    printf("Sum of column 3 = %d\n", columnSum(2, rows, cols, arr));
-  }
-  else
-  {
-    printf("Sum of column 1 = %d\n", columnSum(0, rows, cols, arr));
+    printf("Sum of column %zu = %d\n", i+1, columnSum(i, rows, cols, arr));
   }
 
   puts("");
