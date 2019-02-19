@@ -51,18 +51,12 @@ int main(void)
 
         (*processGrades[choice])(rows, cols, studentGrades);
     }
-    
-
-    //(*functs[2])(rows, cols, processGrades);
-
-    
 
     return 0;
 }
 
 void printMenu()
 {
-    //puts("\nEnter a choice:");
 
     puts("\t0  Print the array of grades");
     puts("\t1  Find the minimum grade");
