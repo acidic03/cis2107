@@ -1,6 +1,15 @@
+//  Matthew Cohen
+//  02-24-2019
+//  CIS 2107
+//  Lab 6 - Race
+//
+//  The purpose of this program is to gain practice with using functions 
+//  with pointers.
+
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
-#include <windows.h>
+#include <unistd.h>
 
 #define RAND_MIN 1
 #define RAND_MAXX 10
@@ -9,6 +18,7 @@ void moveTort(int *pos);
 void moveHare(int *pos);
 void printTort(int *pos);
 void printAnimals(int *tortPos, int *harePos);
+int checkForWin(int *tortPos, int *harePos);
 
 int main(void)
 {
@@ -18,16 +28,33 @@ int main(void)
 	
 	int tortPos = 1;
 	int harePos = 1;
+	int isRunning = 1;
 	
 	int *tortPtr = &tortPos;
 	int *harePtr = &harePos;
-	
-	while (tortPos <= 70)
+
+	while (isRunning)
 	{
-		//printTort(tortPtr);
-		printAnimals(tortPtr, harePtr);
 		moveTort(tortPtr);
 		moveHare(harePtr);
+		
+		if (tortPos >= 70 && harePos >= 70)
+		{
+			puts("TIE!!");
+			isRunning = 0;
+		}
+		else if (tortPos >= 70)
+		{
+			puts("TORTOISE WINS!!! YAY!!!");
+			isRunning = 0;
+		}
+		else if (harePos > 70)
+		{
+			puts("Yuch");
+			isRunning = 0;
+		}
+		if (isRunning)
+			printAnimals(tortPtr, harePtr);\
 	}
 	
 	
@@ -36,117 +63,107 @@ int main(void)
 
 void moveTort(int *pos)
 {
-	unsigned int moveAmount = rand() % (RAND_MAXX + 1) + RAND_MIN;
-	
+	// rand() % (RAND_MAXS + 1) + RAND_MIN
+	int moveAmount = (rand() % RAND_MAXX) + RAND_MIN;
+	//printf("tort move: %d \n", moveAmount);
 	
 	if (moveAmount >= 1 && moveAmount <= 5)
 	{
 		// fast plod move with 50% sleep time
-		*pos += 3;
-		//sleep(500);
-		Sleep(500);
+		if (*pos + 3 > 70)
+			*pos = 70;
+		else
+			*pos += 3;
+		usleep(500 * 1000);
 	} else if (moveAmount >= 6 && moveAmount <= 7)
 	{
 		// slip with 20% sleep time
 		if (*pos - 6 < 1)
-			*pos = 0;
+			*pos = 1;
 		else
 			*pos -= 6;
-		//sleep(200);
-		Sleep(200);
+		usleep(200 * 1000);
 	} else
 	{
 		// slow pod with 30% sleep time
-		*pos += 1;
-		//sleep(300);
-		Sleep(300);
+		if (*pos + 1 > 70)
+			*pos = 70;
+		else
+			*pos += 1;
+		usleep(300 * 1000);
 	}
 	
 }
 
 void moveHare(int *pos)
 {
-	unsigned int moveAmount = rand() % (RAND_MAX + 1) + RAND_MIN;
+	int moveAmount = rand() % RAND_MAXX + RAND_MIN;
 	
 	switch (moveAmount)
 	{
 		case 1:
 		case 2:
 			// don't move
-			Sleep(200);
+			usleep(200 * 1000);
 			break;
 		case 3:
 		case 4:
-			// small slip
-			if (*pos - 2 < 1)
-				*pos = 0;
+			// big hop
+			if (*pos + 9 > 70)
+				*pos = 70;
 			else
-				*pos -= 2;
-			//sleep(200)
-			Sleep(200);
+				*pos += 9;
+			usleep(200 * 1000);
 			break;
 		case 5:
 		case 6:
-			// small hop
-			*pos += 1;
-			//sleep(300)
-			Sleep(300);
+			// big slip
+			if (*pos - 12 < 1)
+				*pos = 1;
+			else
+				*pos -= 12;
+			usleep(100 * 1000);
 			break;
 		case 7:
 		case 8:
-			// big slip
-			if (*pos - 12 < 1)
-				*pos = 0;
+			// small hop
+			if (*pos + 1 > 70)
+				*pos = 70;
 			else
-				*pos -= 12;
-			//sleep(100)
-			Sleep(100);
+				*pos += 1;
+
+			usleep(300 * 1000);
 			break;
 		case 9:
 		case 10:
-			// big hop
-			*pos += 9;
-			Sleep(200);
+			// small slip
+			if (*pos - 2 < 1)
+				*pos = 1;
+			else
+				*pos -= 2;
+			usleep(200 * 1000);
 			break;
+		default:
+			printf("unknown number: %d ", moveAmount);
 	}
 }
 
 void printAnimals(int *tortPos, int *harePos)
 {
-	if (*tortPos < *harePos)
+	for (int i = 1; i <= 70; ++i)
 	{
-		
-		
-	} else
-	{
-		// print H first
-		for (int i = 0; i < 70; ++i)
+		//printf("i: %d ", i);
+		if (i == *tortPos && i == *harePos)
 		{
-			if (i == *tortPos)
-				printf("T ");
-			else if (i == *harePos)
-				printf("H ");
-			
-			printf(" ");
+			printf("OUCH ");
+			break;
 		}
-	}
-	for (int i = 0; i < 70; ++i)
-	{
 		if (i == *tortPos)
 			printf("T ");
-		else if (i == *harePos)
+		if (i == *harePos)
 			printf("H ");
 		
 		printf(" ");
 	}
 	printf("\n");
-}
-
-void printTort(int *pos)
-{
-	for (int i = 0; i < *pos - 1; ++i)
-	{
-		printf(" ");
-	}
-	printf("T\n");
 }
