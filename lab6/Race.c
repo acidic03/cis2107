@@ -28,52 +28,43 @@ int main(void)
 	
 	int tortPos = 1;
 	int harePos = 1;
-	int isRunning = 1;
 	
 	int *tortPtr = &tortPos;
 	int *harePtr = &harePos;
 
-	while (isRunning)
+	while (1)
 	{
 		moveTort(tortPtr);
 		moveHare(harePtr);
+		printAnimals(tortPtr, harePtr);
 		
 		if (tortPos >= 70 && harePos >= 70)
 		{
 			puts("TIE!!");
-			isRunning = 0;
+			break;
 		}
 		else if (tortPos >= 70)
 		{
 			puts("TORTOISE WINS!!! YAY!!!");
-			isRunning = 0;
+			break;
 		}
 		else if (harePos > 70)
 		{
 			puts("Yuch");
-			isRunning = 0;
+			break;
 		}
-		if (isRunning)
-			printAnimals(tortPtr, harePtr);\
 	}
-	
-	
 	return 0;
 }
 
 void moveTort(int *pos)
 {
-	// rand() % (RAND_MAXS + 1) + RAND_MIN
 	int moveAmount = (rand() % RAND_MAXX) + RAND_MIN;
-	//printf("tort move: %d \n", moveAmount);
-	
+	// usleep is in milliseconds
 	if (moveAmount >= 1 && moveAmount <= 5)
 	{
 		// fast plod move with 50% sleep time
-		if (*pos + 3 > 70)
-			*pos = 70;
-		else
-			*pos += 3;
+		*pos += 3;
 		usleep(500 * 1000);
 	} else if (moveAmount >= 6 && moveAmount <= 7)
 	{
@@ -86,10 +77,7 @@ void moveTort(int *pos)
 	} else
 	{
 		// slow pod with 30% sleep time
-		if (*pos + 1 > 70)
-			*pos = 70;
-		else
-			*pos += 1;
+		*pos += 1;
 		usleep(300 * 1000);
 	}
 	
@@ -97,8 +85,8 @@ void moveTort(int *pos)
 
 void moveHare(int *pos)
 {
-	int moveAmount = rand() % RAND_MAXX + RAND_MIN;
-	
+	int moveAmount = (rand() % RAND_MAXX) + RAND_MIN;
+	// usleep is in milliseconds
 	switch (moveAmount)
 	{
 		case 1:
@@ -109,10 +97,7 @@ void moveHare(int *pos)
 		case 3:
 		case 4:
 			// big hop
-			if (*pos + 9 > 70)
-				*pos = 70;
-			else
-				*pos += 9;
+			*pos += 9;
 			usleep(200 * 1000);
 			break;
 		case 5:
@@ -127,11 +112,7 @@ void moveHare(int *pos)
 		case 7:
 		case 8:
 			// small hop
-			if (*pos + 1 > 70)
-				*pos = 70;
-			else
-				*pos += 1;
-
+			*pos += 1;
 			usleep(300 * 1000);
 			break;
 		case 9:
@@ -152,7 +133,6 @@ void printAnimals(int *tortPos, int *harePos)
 {
 	for (int i = 1; i <= 70; ++i)
 	{
-		//printf("i: %d ", i);
 		if (i == *tortPos && i == *harePos)
 		{
 			printf("OUCH ");
