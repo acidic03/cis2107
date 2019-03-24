@@ -52,7 +52,7 @@ int main()
     comparePartialStr("Test1", "Test2", 4);
 
     //test for randomize
-    //randomize();
+    randomize();
 
     //test for tokenize number
     char str[] = "(267) 436-6281";
@@ -147,24 +147,24 @@ float convertStrtoFloat(const char *s1, const char *s2, const char *s3, const ch
 // //4.(Comparing Strings)
 void compareStr(const char *s1, const char *s2)
 {
+	printf("\n");
     int result = strcmp(s1, s2);
 
     // strings are equal
     if (result == 0)
-        printf("\n%s = %s\n", s1, s2);
+        printf("%s = %s\n", s1, s2);
         // s2 is greater
     else if (result < 0)
-        printf("\n%s < %s\n", s1, s2);
+        printf("%s < %s\n", s1, s2);
         // s1 is greater
     else
-        printf("\n%s > %s\n", s1, s2);
-    puts("");
+        printf("%s > %s\n", s1, s2);
+    
 }
 
 // //5.(Comparing Portions of Strings)
 void comparePartialStr(const char *s1, const char *s2, int n)
 {
-    printf("\n");
     int result = strncmp(s1, s2, n);
     printf("Comparison of first %d chars: ", n);
 
@@ -187,9 +187,9 @@ void randomize(void)
     char *noun[6] = {"boy", "girl", "dog", "town", "car"};
     char *verb[6] = {"drove", "jumped", "ran", "walked", "skipped"};
     char *preposition[6] = {"to", "from", "over", "under", "on"};
-    char sentence[36];
+    char sentence[40] = "";
 
-    puts("");
+    //puts("");
 
     // create 20 sentences
     for (int i = 0; i < 20; i++)
@@ -198,9 +198,10 @@ void randomize(void)
         int n = rand() % 5;
 
         strcat(sentence, article[n]);
-        strcat(sentence, " ");
+        
         // beginning of sentence so capitalize it
         sentence[0] = toupper(sentence[0]);
+        strcat(sentence, " ");
 
         n = rand() % 5;
         strcat(sentence, noun[n]);
@@ -221,15 +222,15 @@ void randomize(void)
         n = rand() % 5;
         strcat(sentence, noun[n]);
 
-        strcat(sentence, ". ");
+        strcat(sentence, ".");
 
         // terminate string
-        sentence[35] = '\0';
+        sentence[39] = '\0';
         printf("%s ", sentence);
         // clear the char array
         sentence[0] = '\0';
     }
-    puts("");
+    printf("\n\n");
 }
 
 // //7.(Tokenizing Telephone Numbers)
@@ -246,10 +247,10 @@ int tokenizeTelNum(char *num) {
         areaCode = strtol(tokenPtr, &ptr, 0);
     }
 
-    // find the rest of the number
+    // find the rest of the phone number
     tokenPtr = strtok(NULL, " -");
 
-    char phoneNumberStr[9];
+    char phoneNumberStr[8];
 
     while (tokenPtr != NULL)
     {
@@ -257,6 +258,8 @@ int tokenizeTelNum(char *num) {
         strcat(phoneNumberStr, tokenPtr);
         tokenPtr = strtok(NULL, "-");
     }
+    // terminate string
+    phoneNumberStr[7] = '\0';
 
     long phoneNumber = strtol(phoneNumberStr, &ptr, 0);
     // display the phone number
